@@ -41,7 +41,12 @@ def train_and_select_champion():
             mlflow.log_metric("mae", mae)
             mlflow.log_metric("r2", r2)
             
-            mlflow.sklearn.log_model(model, artifact_path="model")
+            # Guardado seguro declarando el tipo de árbol de scikit-learn como confiable
+            mlflow.sklearn.log_model(
+                model, 
+                artifact_path="model", 
+                skops_trusted_types=["sklearn.tree._tree.Tree"]
+            )
             
             print(f"Model: {name} | RMSE: {rmse:.2f} | R2: {r2:.2f}")
             
